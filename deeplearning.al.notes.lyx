@@ -86,7 +86,7 @@ Notation
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\hat{y}=\sigma(w^{T}x+b)$
+\begin_inset Formula $a=\hat{y}=\sigma(w^{T}x+b)$
 \end_inset
 
 , where 
@@ -97,18 +97,10 @@ Notation
 \end_layout
 
 \begin_layout Itemize
-Loss (error) function 
+Logistic Loss (error) function
 \begin_inset Formula 
 \[
-\mathcal{L}(\hat{y},y)=\frac{1}{2}(\hat{y}-y)^{2}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\mathcal{L}(\hat{y},y)=-\left(y\log\hat{y}+(1-y)\log(1-\hat{y})\right)
+\mathcal{L}(a,y)=-\left(y\log a+(1-y)\log(1-a)\right)
 \]
 
 \end_inset
@@ -117,10 +109,10 @@ Loss (error) function
 \end_layout
 
 \begin_layout Itemize
-Cost function
+Logistic Cost function
 \begin_inset Formula 
 \[
-J(w,b)=\frac{1}{m}\sum_{i=1}^{m}\mathcal{L}(\hat{y}^{(i)},y^{(i)})
+J(w,b)=\frac{1}{m}\sum_{i=1}^{m}\mathcal{L}(a^{(i)},y^{(i)})
 \]
 
 \end_inset
@@ -128,5 +120,151 @@ J(w,b)=\frac{1}{m}\sum_{i=1}^{m}\mathcal{L}(\hat{y}^{(i)},y^{(i)})
 
 \end_layout
 
+\begin_layout Itemize
+Logistic regression back propagation
+\begin_inset Formula 
+\[
+dz=\frac{d\mathcal{L}}{dz}=a-y
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+da=\frac{d\mathcal{L}}{da}=-\frac{y}{a}+\frac{1-y}{1-a}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{da}{dz}=a(1-a)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Vectorization:
+\begin_inset Formula 
+\[
+A=(a^{(1)},\dots,a^{(m)})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Z=(z^{(1)},\dots,z^{(m)})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Y=(y^{(1)},\dots,y^{(m)})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+dZ=A-Y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Method
+\end_layout
+
+\begin_layout Itemize
+Gradient Descent
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Objective: 
+\begin_inset Formula $\text{arg}\text{min}_{w,b}J(w,b)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Algorithm: 
+\begin_inset Formula $w:=w-\alpha\frac{\partial J}{\partial w}=w-\alpha dw$
+\end_inset
+
+; 
+\begin_inset Formula $b:=b-\alpha db$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Backpropagation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+http://colah.github.io/posts/2015-08-Backprop/
+\end_layout
+
+\begin_layout Itemize
+http://neuralnetworksanddeeplearning.com/chap2.html
+\end_layout
+
+\begin_layout Itemize
+http://www.math.uiuc.edu/documenta/vol-ismp/52_griewank-andreas-b.pdf
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gradiaent Descent for logistic regression with backpropagation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $Z=w^{T}X+b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A=\sigma(Z)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $dw=\frac{1}{m}XdZ^{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $db=\frac{1}{m}\sum_{i=1}^{m}dZ_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \end_body
 \end_document

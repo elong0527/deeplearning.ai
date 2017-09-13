@@ -184,6 +184,172 @@ dZ=A-Y
 
 \end_layout
 
+\begin_layout Subsection
+Algorithm Convention
+\end_layout
+
+\begin_layout Subsection*
+Sizes:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $m$
+\end_inset
+
+: number of observations
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n_{x}=n_{h}^{[L]}:$
+\end_inset
+
+ number of input features
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n_{y}=n_{h}^{[0]}$
+\end_inset
+
+: number of output features
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n_{h}^{[l]}$
+\end_inset
+
+, 
+\begin_inset Formula $l=0,\dots,L$
+\end_inset
+
+: number of neurons at the 
+\begin_inset Formula $l$
+\end_inset
+
+th layer
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L$
+\end_inset
+
+: number of layer
+\end_layout
+
+\begin_layout Subsection*
+Input:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $X\in\mathbb{R}^{n_{x}\times m}$
+\end_inset
+
+: input matrix
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x^{(i)}\in\mathbb{R}^{n_{x}}$
+\end_inset
+
+: input matrix for 
+\begin_inset Formula $i$
+\end_inset
+
+th subject
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Y\in\mathbb{R}^{n_{y}\times m}$
+\end_inset
+
+: output matrix
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $y^{(i)}\in\mathbb{R}^{n_{y}}$
+\end_inset
+
+: output matrix for ith subject
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $y$
+\end_inset
+
+, 
+\begin_inset Formula $\hat{y}\in\mathbb{R}^{n_{y}}$
+\end_inset
+
+: population level output vector
+\end_layout
+
+\begin_layout Subsection*
+Algorithm
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $W^{[l]}\in\mathbb{R}^{[n_{h}^{[l]},n_{h}^{[l-1]}]}$
+\end_inset
+
+: 
+\begin_inset Formula $i$
+\end_inset
+
+th layer weight matrix
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b^{[l]}\in\mathbb{R}^{[n_{h}^{[l]}]}$
+\end_inset
+
+: 
+\begin_inset Formula $i$
+\end_inset
+
+th layer bias vector
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A^{[l]}\in\mathcal{\mathbb{R}}^{n\times m}$
+\end_inset
+
+: Activation matrix for 
+\begin_inset Formula $l$
+\end_inset
+
+th layer
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a_{k}^{[i](j)}$
+\end_inset
+
+, 
+\begin_inset Formula $i=1,\dots,n$
+\end_inset
+
+, 
+\begin_inset Formula $j=1\dots,m$
+\end_inset
+
+ and 
+\begin_inset Formula $k=1,\dots,K$
+\end_inset
+
+: 
+\begin_inset Formula $k$
+\end_inset
+
+th neuron at 
+\begin_inset Formula $i$
+\end_inset
+
+th layer for 
+\begin_inset Formula $j$
+\end_inset
+
+th iteration.
+\end_layout
+
 \begin_layout Section
 Method
 \end_layout
@@ -238,28 +404,46 @@ Gradiaent Descent for logistic regression with backpropagation
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $Z=w^{T}X+b$
+\begin_inset Formula $Z^{[l]}=W^{[l]}A^{[l-1]}+b^{[l]}$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $A=\sigma(Z)$
+\begin_inset Formula $A^{[l]}=g(Z^{[l]})$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $dw=\frac{1}{m}XdZ^{T}$
+\begin_inset Formula $dZ^{[L]}=A^{[L]}-Y$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $db=\frac{1}{m}\sum_{i=1}^{m}dZ_{i}$
+\begin_inset Formula $dZ^{[l]}=W^{[l+1]T}dZ^{[l+1]}*g^{[1]'}(Z^{[l]})$
+\end_inset
+
+; where 
+\begin_inset Formula $l<L$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $dW^{[l]}=\frac{1}{m}dZ^{[l]}A^{[l-1]^{T}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $db=\frac{1}{m}\sum_{i=1}^{m}dZ_{i}^{[l]}$
 \end_inset
 
 
